@@ -1,64 +1,32 @@
-# DevTinder 🚀
 
-A dating app specifically designed for developers and tech professionals to connect, collaborate, and find their perfect match.
+# DevTinder
 
-## Features ✨
+DevTinder is a simple matchmaking app for developers. Connect with like-minded coders, send requests, and build your dev network.
 
-- Profile creation with tech stack preferences
-- Algorithm-based matching system
-- Real-time chat with code snippet sharing
-- Project collaboration opportunities
-- Tech event meetups integration
+---
 
-## Tech Stack 💻
+## 🚀 Features
 
-- Frontend: React.js
-- Backend: Node.js & Express
-- Database: MongoDB
-- Real-time: Socket.io
-- Authentication: JWT
+- 📝 Signup / Login
+- 🔍 Explore developer profiles
+- 🤝 Send & receive connection requests
+- 💬 Accept, reject or ignore requests
+- 🧠 Built with Express, Node.js & MongoDB
 
-## Getting Started 🌟
+---
 
-### Prerequisites
+## 📦 Tech Stack
 
-- Node.js (v14 or higher)
-- MongoDB
-- npm or yarn
+- **Frontend:** HTML/CSS, (React or Vanilla JS)
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB
 
-### Installation
+---
 
-1. Clone the repository
+## 🛠 Installation
+
 ```bash
-git clone https://github.com/yourusername/devtinder.git
+git clone https://github.com/your-username/devtinder.git
 cd devtinder
-```
-
-2. Install dependencies
-```bash
 npm install
-```
-
-3. Set up environment variables
-```bash
-cp .env.example .env
-```
-
-4. Start the development server
-```bash
-npm run dev
-```
-
-## Contributing 🤝
-
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## License 📝
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Contact 📧
+npm start
