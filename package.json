@@ -1,0 +1,24 @@
+{
+  "name": "devtinder",
+  "version": "1.0.0",
+  "description": "A dating app specifically designed for developers and tech professionals to connect, collaborate, and find their perfect match.",
+  "homepage": "https://github.com/divy6976/DevTinder#readme",
+  "bugs": {
+    "url": "https://github.com/divy6976/DevTinder/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/divy6976/DevTinder.git"
+  },
+  "license": "ISC",
+  "author": "divy",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
+  },
+  "dependencies": { 
+    "express": "^5.1.0"
+  }
+}
