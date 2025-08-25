@@ -1,0 +1,94 @@
+
+
+# DevTinder Project Plan
+
+---
+
+## 1. Requirements
+
+- Create an account  
+- Login  
+- Update your profile  
+- Feed page (Explore)  
+- Send connection request  
+- See our matches  
+- See the requests we've sent and received  
+
+---
+
+## 2. Tech Planning
+
+- Microservices architecture:  
+  - Frontend service  
+  - Backend service  
+
+---
+
+## 3. Database Design
+
+### User Collection
+
+| Field              | Description                    |
+|--------------------|--------------------------------|
+| _id                | Unique user identifier         |
+| name               | User's full name               |
+| email              | User's email (unique)          |
+| password           | Hashed password                |
+| bio                | Short biography                |
+| profile_picture_url | URL to profile image           |
+| interests          | User interests                 |
+| ...                | Other profile related fields   |
+
+---
+
+### ConnectionRequests Collection
+
+| Field       | Description                                                      |
+|-------------|------------------------------------------------------------------|
+| _id         | Unique request identifier                                        |
+| fromUserId  | User ID who sent the connection request                          |
+| toUserId    | User ID to whom the request is sent                              |
+| status      | Request status: `"pending"` \| `"accepted"` \| `"rejected"` \| `"ignored"` |
+| createdAt   | Timestamp when request was created                               |
+| updatedAt   | Timestamp when request status was last updated                  |
+
+---
+
+## 4. API Design
+
+| HTTP Method | Endpoint               | Description                                  |
+|-------------|------------------------|----------------------------------------------|
+| POST        | `/signup`              | Create new user account                      |
+| POST        | `/login`               | User login and authentication                |
+| GET         | `/profile`             | Get logged-in user's profile                   |
+| PUT         | `/profile`             | Full update of logged-in user's profile       |
+| PATCH       | `/profile`             | Partial update of logged-in user's profile    |
+| POST        | `/connection-requests` | Send a connection request (interest/ignore)  |
+| POST        | `/review-request`      | Accept or reject a received connection request|
+| GET         | `/requests`            | Get all connection requests (sent and received)|
+| GET         | `/connections`         | Get list of accepted connections (matches)   |
+
+---
+
+## 5. Workflow Summary
+
+- User signs up → `POST /signup`  
+- User logs in → `POST /login` → receives JWT token  
+- User fetches profile → `GET /profile`  
+- User updates profile → `PUT /profile` (full) or `PATCH /profile` (partial)  
+- User sends connection request → `POST /connection-requests`  
+- User views requests → `GET /requests`  
+- User accepts or rejects requests → `POST /review-request`  
+- User views matches → `GET /connections`  
+
+---
+
+## 6. Additional Notes
+
+- Use JWT tokens for authentication, sent in `Authorization` header with every protected request.  
+- Validate all incoming data thoroughly.  
+- Implement pagination on list endpoints (`/requests`, `/connections`) for performance.  
+- Use timestamps (`createdAt`, `updatedAt`) for sorting and filtering.  
+- Follow RESTful principles for API design.  
+- Consider adding blocking feature later as an enhancement.  
+

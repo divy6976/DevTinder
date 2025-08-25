@@ -1,0 +1,205 @@
+where ever there is a javascript there is always a javascript engine
+
+         
+         if you are saying js engine then you are ust executing c++ program
+
+         v8 can be imbeeded into any c++ application
+
+
+
+
+
+-----------------------------------------------------------------------------------------
+
+
+
+dusir file ke fucniton(module) apne file me use  krna 
+
+
+agar dusi module ki functions use krne h toh simple require se kaam nhi chlega
+modules  protectes  their variables and functions from leaking
+
+//if want to use then  export 
+module.exports=calculate sum
+
+if(ek se jada export then )
+f
+module.exports={
+    x:x,
+
+   calculatesum: calculate sum}
+
+ye obj import hoke ayega
+import me obj.calculateSum
+ya fr const {x,calculateSum}=require('./sum.js)
+fr sidha use
+
+
+module.exports is empty object
+
+c
+//fr import
+const calculatesum=require('./sum);
+
+--------------------------------------------------------------
+ya toh import export wala use krlo
+
+---------------------------------------------------------------
+
+
+all the code of  the module is wrapped inside a fucntion(IIFE)
+
+//IIFE- Immediately invoked Function Expression
+
+(function (){
+  all  the code of module run inside this
+})()
+
+
+immedaitely invoeks the code
+keep varibales and fucntion safe
+
+ques- How are variables and function private in diiferent modules
+becaus eof iife and require
+
+ques-how do you get acess to module.export
+ans - node.js asses module as a parameter to the iife in whch code is wrapped
+
+
+-----------------------------------------------------------------------------
+
+how   require(./path) works
+
+1st resolve the file
+2nd load the content acc to file 
+3rd wrap in iife (compile step)
+4th evaulation
+5th caching
+
+ 
+if (idx==0){
+
+}
+
+
+set time:Date.now();
+
+
+-------------------------------------------------------------------------
+
+
+diff between the synchronous and asynchrnous
+
+
+resturant me jbtk ek ki order complete nhi tbtk dsure se nhi le skte
+
+js is synchornous but with the superpowers of node js it can work asynchronous
+
+
+synchronous code can exceute immediately js loves this
+aysnchornoyus task take time to execute
+
+
+Time tide and javascript does not wai tfor anyone
+----------------------------------------------------------------------------------
+
+setTimeout whatwever //this function only will be pushed in to the callstack of v8 once its become empty so its doesn,t matter its for 0 second or more than that
+
+
+-----------------------------------------------------------------------------------------
+code into v8 process
+1- code into token (code break into smlaler code)
+
+
+
+2- token into abstract syntax tree
+
+
+
+2nd step ast goes to interpreter
+
+---------------------------------------------------------------------------------------------------
+libuv internals
+11
+one cycle of the evnt loop is knwon as one tick
+
+-----------------------------------------------------------------------------------------------
+in rdbms data is stored in the form of table
+
+
+in mongodb data stored in form of json object
+
+---------------------------------------------------------------------------------------------------------------
+AB suru hoga databse bnana 
+                             
+                             // go to mongodb website
+//creaet a free mo cluste
+//create a user and pass
+//get the connection string
+//
+//install mongodb compass
+
+
+
+------------------------------------------------------------
+connecting node js app to databse 
+jiske liye chiaye hoga package jaise mongodb
+
+
+
+
+ monolithic - a single large project
+ microservices-  alg alg small project
+
+
+
+
+
+
+
+ -----------------------------------------------------------------------------
+
+ DevTinder - Requirements
+
+    Create an account
+    login
+    update your profile
+    feed page explore
+    send connection reuqest
+    see our matches
+    see the request we've sent and recieved
+
+             Tech Planning-
+    
+    2 micro
+    frontend and bakcend
+    
+
+
+   send connection reuqest to store realtionship between  one user to another user we neead a another collection
+
+   // db design 
+
+   connections request collection- 
+   -from userid
+   -to user id 
+   status=pending  || accept|| reject
+   || ignored if left swap
+
+
+
+
+
+   user collection- user ki sari information
+
+   //API DESIGN
+      post   /signup
+      post  /login
+      get  /profile
+      put /profile
+      patch  /profile
+      post        /send reuqest =>ignore interest
+      post  /reviewrequest=> accept ,reject
+      get   /reuqest
+      get /connections 
+
