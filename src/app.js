@@ -2,43 +2,44 @@ const express=require("express")
 
 
 const app=express();
+const { adminauth,userauth } = require('../middlewares/auth');
 
 
 
+app.use("/admin",adminauth);
 
-app.get("/user",(req,res)=>{
+app.get("/admin/dashboard",(req,res)=>{
+   res.send("Welcome to the admin dashboard");
+});
 
-    res.send({
-        id: 1,
-        name: "John Doe",
-        email: "john.doe@example.com"
-    })
+app.get("/admin/settings",(req,res)=>{
+   res.send("Welcome to the admin settings");
+});
 
+
+app.post("/user/login",(req,res)=>{
+    res.send("Welcome to the user login page");
 })
 
-app.post("/user",(req,res)=>{
-res.send("post request received")
+app.use("/user",userauth)
+
+
+app.get("/user/profile",(req,res)=>{
+    res.send("Welcome to the user profile page");
 })
 
-app.put("/user",(req,res)=>{
-   res.send("user update succesfully in put")
+app.get("/user/settings",(req,res)=>{   
+    throw new Error("Simulated server error");
 })
 
-
-app.patch("/user",(req,res)=>{
-   res.send("email fixed in patch")
+app.get("/user/settings",(req,res)=>{   
+   res.send("Welcome to the user settings page");
 })
 
-app.delete("/user",(req,res)=>{
-   res.send("user deleted successfully")
+app.use("/",(err,req,res,next)=>{
+    console.error(err.stack);
+    res.status(500).send("Something broke!");
 })
-
-
-
-app.use("/test",(req,res)=>{
-    res.send("hello boy")
-})
-
 
 
 
