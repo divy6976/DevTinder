@@ -2,53 +2,57 @@ const express=require("express")
 
 
 const app=express();
-const { adminauth,userauth } = require('../middlewares/auth');
 
 
+const {User}=require("./models/usermodel")
+const {connectDB}=require("./config/database")
 
-app.use("/admin",adminauth);
-
-app.get("/admin/dashboard",(req,res)=>{
-   res.send("Welcome to the admin dashboard");
-});
-
-app.get("/admin/settings",(req,res)=>{
-   res.send("Welcome to the admin settings");
-});
+app.use(express.json());   //read the JSOn object and cinvert it into js object and add it to req.body
+app.use(express.urlencoded({extended:true}));  //form data url se lene ko liye
 
 
-app.post("/user/login",(req,res)=>{
-    res.send("Welcome to the user login page");
+app.post("/signup",async (req,res)=>{
+
+    const {firstName,lastName,email,password,age}=req.body;
+    console.log(req.body);
+
+if(!firstName || !lastName || !email || !password || !age){
+    return res.status(400).send("All fields are required"); }
+    
+
+    const user=     await User.create({
+            firstName,
+            lastName,
+            email,
+            password,
+            age
+         })
+
+         try{
+            await user.save()
+            console.log("User created successfully");
+            res.send("user signup successful")
+         }catch(err){
+             console.log(err);
+             res.status(500).send("Internal Server Error");
+         }
+
 })
 
-app.use("/user",userauth)
-
-
-app.get("/user/profile",(req,res)=>{
-    res.send("Welcome to the user profile page");
-})
-
-app.get("/user/settings",(req,res)=>{   
-    throw new Error("Simulated server error");
-})
-
-app.get("/user/settings",(req,res)=>{   
-   res.send("Welcome to the user settings page");
-})
-
-app.use("/",(err,req,res,next)=>{
-    console.error(err.stack);
-    res.status(500).send("Something broke!");
-})
 
 
 
 
 
 
-
-
-
-app.listen(7777,()=>{
+connectDB()
+.then(()=>{
+    console.log("Database connected successfully");
+    app.listen(7777, () => {
     console.log("server is running at 7777")
 })                   //now it can take requests
+
+}).catch((err)=>{
+    console.log("Database not connected");
+});
+
