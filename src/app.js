@@ -11,35 +11,49 @@ app.use(express.json());   //read the JSOn object and cinvert it into js object 
 app.use(express.urlencoded({extended:true}));  //form data url se lene ko liye
 
 
-app.post("/signup",async (req,res)=>{
-    //added the data to the database
+app.post("/signup", async (req, res) => {
+  const { firstName, lastName, email, password, age } = req.body;
+  console.log(req.body);
 
-    const {firstName,lastName,email,password,age}=req.body;
-    console.log(req.body);
+  if (!firstName || !lastName || !email || !password) {
+    return res.status(400).send("All fields are required");
+  }
 
-if(!firstName || !lastName || !email || !password || !age){
-    return res.status(400).send("All fields are required"); }
-    
+  try {
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).send("User already exists");
+    }
 
-    const user=     await User.create({
-            firstName,
-            lastName,
-            email,
-            password,
-            age
-         })
+    // Create new user document
+    const newUser = new User({
+      firstName,
+      lastName,
+      email,
+      password,
+      age,
+    });
 
-         try{
-            await user.save()
-            console.log("User created successfully");
-            res.send("user signup successful")
-         }catch(err){
-             console.log(err);
-             res.status(500).send("Internal Server Error");
-         }
+    // Save new user (runs schema validations automatically)
+    await newUser.save();
 
-          
-})
+    console.log("User created successfully");
+    res.send("User signup successful");
+  } catch (err) {
+    console.error(err);
+
+    // Handle validation errors separately to provide useful feedback
+    if (err.name === "ValidationError") {
+      // Collect all validation error messages
+      const messages = Object.values(err.errors).map(e => e.message);
+      return res.status(400).send(messages.join(", "));
+    }
+
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 
 
 //get the user from email
@@ -120,8 +134,28 @@ app.delete("/delete",async(req,res)=>{
 
 
 
+app.patch("/update",async (req,res)=>{
+    const id=req.body.id;
+   try {
+    if (req.body.email && req.body.email !== user.email) {
+  return res.status(400).send("Email cannot be changed");
+}
+
+     const user=await User.findByIdAndUpdate({_id:id},req.body,{ new: true, runValidators: true })  //new:true means return the updated user;
+     console.log(req.body);
 
 
+
+
+    res.send("user updated successfully")
+
+    
+   } catch (error) {
+       console.log(error);
+       res.status(500).send("Internal Server Error");
+   }
+
+})
 
 
 
