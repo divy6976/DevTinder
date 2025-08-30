@@ -1,5 +1,6 @@
 const express=require("express")
-
+const bcrypt=require("bcrypt")
+const validator=require("validator")
 
 const app=express();
 
@@ -12,11 +13,16 @@ app.use(express.urlencoded({extended:true}));  //form data url se lene ko liye
 
 
 app.post("/signup", async (req, res) => {
+    //validate the data
+    //alagh se function likhne ki koi jrrut nhi 
   const { firstName, lastName, email, password, age } = req.body;
   console.log(req.body);
 
   if (!firstName || !lastName || !email || !password) {
     return res.status(400).send("All fields are required");
+  }
+   if (!validator.isEmail(email)) {
+    return res.status(400).send("Invalid email ");
   }
 
   try {
@@ -53,6 +59,57 @@ app.post("/signup", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
+
+app.post("/login",async(req,res)=>{
+    //email password lo
+    //validate kro
+    //email se exist or nnot
+        //pass veirfy
+        //if all true token genertae through jwt
+        //db me store
+        // token bejdo
+        //succes message bejdo
+  const { email, password } = req.body;
+
+ 
+
+
+
+  console.log("req.body:", req.body);
+  if (!email || !password) {
+    return res.status(400).send("Email and password required");
+  }
+   if (!validator.isEmail(email)) {
+    return res.status(400).send("Invalid email ");
+  }
+
+                 try {
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    return res.status(400).send("Invalid Credentials");
+  }
+
+  const isMatch = await bcrypt.compare(password, user.password);
+
+  if (!isMatch) {
+    return res.status(400).send("Invalid Credentials");
+  }
+  res.send("Login successful");
+          
+
+
+} catch (err) {
+  console.error(err);
+  res.status(500).send("Login not successful");
+}
+
+})
+
+
+
+
 
 
 
@@ -127,7 +184,7 @@ app.delete("/delete",async(req,res)=>{
         res.send("User deleted successfully");
     } catch (error) {
         console.log(error);
-        res.status(500).send("Internal Server Error");
+        res.status(500).send("User cannot be deleted");
     }
 });
 
