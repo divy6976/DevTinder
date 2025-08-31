@@ -1,6 +1,7 @@
 const express=require('express')
 const validator=require("validator")
 const bcrypt=require("bcrypt")
+const {isLoggedIn}=require("../middlewares/auth")
 const cookieParser = require('cookie-parser');
 
 const {User}=require("../models/usermodel")
@@ -130,6 +131,15 @@ authRouter.post("/login",async(req,res)=>{
 })
 
 
+
+// authenticate login or not
+//if login  toh cookie expire krdo
+
+authRouter.post("/logout",isLoggedIn,async(req,res)=>{
+  res.cookie("token",null,{expires:new Date(0)})
+  res.send("Logout successful");
+
+})
 
 
 module.exports={
